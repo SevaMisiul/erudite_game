@@ -47,17 +47,19 @@ end;
 procedure TForm3.NextPlayerBtnClick(Sender: TObject);
 
 begin
-inc(i);
-  if i <= NumberOfPlayers then
+       inc(i);
+  if i < NumberOfPlayers then
   begin
-    Players[i-2].name:=Player.Text;
+    Players[i-1].name:=Player.Text;
 	Player.Text := '';
+    PlayerNameLabel.Caption := 'Enter player ' + IntToStr(i+1) + ' name' +IntToStr(NumberOfPlayers);
   end else
   begin
+  Players[i].name:=Player.Text;
     Form3.Hide;
     Form4.Show;
   end;
-  PlayerNameLabel.Caption := 'Enter player ' + IntToStr(i) + ' name' +IntToStr(NumberOfPlayers);
+
 
 end;
 end.

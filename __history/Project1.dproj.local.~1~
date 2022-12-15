@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2022/12/15 11:12:54.000.191,=D:\univer\delphi\Unit1.pas</Transaction>
+    <Transaction>2022/12/15 11:25:12.000.114,=D:\univer\delphi\Unit2.pas</Transaction>
+    <Transaction>2022/12/15 11:37:34.000.923,D:\univer\delphi\Project1.dproj=D:\univer\delphi\Project1.dproj</Transaction>
+    <Transaction>2022/12/15 11:43:09.000.830,=D:\univer\delphi\Unit3.pas</Transaction>
+    <Transaction>2022/12/15 13:01:57.000.956,=D:\univer\delphi\erudite2.0\Unit4.pas</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="Unit1.pas"/>
+    <File Path="Unit1.dfm"/>
+    <File Path="Unit2.pas"/>
+    <File Path="Unit2.dfm"/>
+    <File Path="Unit3.pas"/>
+    <File Path="Unit3.dfm"/>
+    <File Path="Unit4.pas"/>
+    <File Path="Unit4.dfm"/>
+  </ProjectSortOrder>
+</BorlandProject>

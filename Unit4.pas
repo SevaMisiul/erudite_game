@@ -8,7 +8,7 @@ uses
 
 type
   TForm4 = class(TForm)
-    Player1Name: TLabel;
+
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
@@ -18,17 +18,33 @@ type
 
 var
   Form4: TForm4;
-
+   Labels:array of TLabel;
 implementation
-uses Unit3;
+uses Unit3,Unit2;
 
 
 {$R *.dfm}
 
 
+
+
 procedure TForm4.FormShow(Sender: TObject);
+var i,h: integer;
 begin
-player1Name.Caption:=players[0].name;
+setLength(Labels,NumberOfPlayers);
+h:=20;
+for i:=0 to NumberOfPlayers do
+ begin
+  labels[i]:=TLabel.Create(Form4);
+  with labels[i] do
+   begin
+    Parent:=Form4;
+    Left:=100*i;
+    Height:=h;
+    Top:=h;
+    Caption:=Players[i].name;
+   end;
+ end;
 end;
 
 end.

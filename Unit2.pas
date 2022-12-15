@@ -40,7 +40,7 @@ end;
 
 procedure TForm2.SubmitButtonClick(Sender: TObject);
 begin
-  i := 1;
+  i := 0;
   NumberOfPlayers := strToInt(NumberOfPlayersEdit.Text);
   Form2.Hide;
   Form3.Show;

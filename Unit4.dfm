@@ -14,11 +14,4 @@ object Form4: TForm4
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object Player1Name: TLabel
-    Left = 144
-    Top = 104
-    Width = 63
-    Height = 13
-    Caption = 'Player1Name'
-  end
 end
