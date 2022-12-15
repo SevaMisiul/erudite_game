@@ -22,7 +22,7 @@ type
 
 var
   Form2: TForm2;
-  NumberOfPlayers: short;
+  NumberOfPlayers,i: short;
 
 implementation
 
@@ -41,6 +41,7 @@ procedure TForm2.SubmitButtonClick(Sender: TObject);
 begin
   Form2.Hide;
   Form3.Show;
+  
 end;
 
 end.

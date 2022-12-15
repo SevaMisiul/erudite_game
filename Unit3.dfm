@@ -14,25 +14,26 @@ object Form3: TForm3
   PixelsPerInch = 96
   TextHeight = 13
   object PlayerNameLabel: TLabel
-    Left = 256
+    Left = 248
     Top = 120
-    Width = 88
+    Width = 97
     Height = 13
-    Caption = 'Enter player name'
+    Caption = 'Enter player 1 name'
   end
   object Player: TEdit
-    Left = 304
-    Top = 176
-    Width = 121
+    Left = 232
+    Top = 168
+    Width = 131
     Height = 21
     TabOrder = 0
   end
   object NextPlayerBtn: TButton
-    Left = 288
+    Left = 248
     Top = 232
-    Width = 75
+    Width = 96
     Height = 25
     Caption = 'Next player'
     TabOrder = 1
+    OnClick = NextPlayerBtnClick
   end
 end
