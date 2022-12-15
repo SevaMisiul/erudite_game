@@ -16,15 +16,15 @@ object Form3: TForm3
   object PlayerNameLabel: TLabel
     Left = 248
     Top = 120
-    Width = 96
+    Width = 97
     Height = 13
-    Caption = 'Enter player name'
+    Caption = 'Enter player 1 name'
   end
   object Player: TEdit
     Left = 232
     Top = 168
     Width = 131
-    Height = 29
+    Height = 21
     TabOrder = 0
   end
   object NextPlayerBtn: TButton
@@ -34,5 +34,6 @@ object Form3: TForm3
     Height = 25
     Caption = 'Next player'
     TabOrder = 1
+    OnClick = NextPlayerBtnClick
   end
 end

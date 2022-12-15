@@ -41,8 +41,7 @@ procedure TForm2.SubmitButtonClick(Sender: TObject);
 begin
   Form2.Hide;
   Form3.Show;
-  i:=1;
-
+  
 end;
 
 end.

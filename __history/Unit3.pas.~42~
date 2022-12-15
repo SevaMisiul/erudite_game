@@ -25,7 +25,7 @@ type
     letters:TLetters;
     points:integer;
   end;
-  TPlayers = array of TPlayer;
+  TPlayers = array[1..8] of TPlayer;
 var
   Form3: TForm3;
   Players: TPlayers;
@@ -40,18 +40,17 @@ uses Unit2;
 procedure TForm3.NextPlayerBtnClick(Sender: TObject);
 
 begin
-
-  if i > NumberOfPlayers then
+inc(i);
+  if i <= NumberOfPlayers then
   begin
-
+    Players[i-1].name:=Player.Text;
 	Player.Text := '';
-    inc(i);
-	PlayerNameLabel.Caption := 'Enter player ' + IntToStr(i) + ' name' +IntToStr(NumberOfPlayers);
   end else
   begin
     Form3.Hide;
-  	Form4.Show;
+    Form4.Show;
   end;
+  PlayerNameLabel.Caption := 'Enter player ' + IntToStr(i) + ' name' +IntToStr(NumberOfPlayers);
 
 end;
 end.

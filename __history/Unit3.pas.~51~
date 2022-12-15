@@ -13,6 +13,7 @@ type
 	Player: TEdit;
 	NextPlayerBtn: TButton;
 	procedure NextPlayerBtnClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
 	{ Private declarations }
   public
@@ -37,21 +38,26 @@ implementation
 
 uses Unit2;
 
+procedure TForm3.FormShow(Sender: TObject);
+begin
+Player.Text:=IntToStr(NumberOfPlayers);
+setLength(Players, NumberOfPlayers);
+end;
+
 procedure TForm3.NextPlayerBtnClick(Sender: TObject);
 
 begin
-   inc(i);
+inc(i);
   if i <= NumberOfPlayers then
   begin
-
+    Players[i-1].name:=Player.Text;
 	Player.Text := '';
-
-    PlayerNameLabel.Caption := 'Enter player ' + IntToStr(i) + ' name' +IntToStr(NumberOfPlayers);
   end else
   begin
     Form3.Hide;
-  	Form4.Show;
+    Form4.Show;
   end;
+  PlayerNameLabel.Caption := 'Enter player ' + IntToStr(i) + ' name' +IntToStr(NumberOfPlayers);
 
 end;
 end.

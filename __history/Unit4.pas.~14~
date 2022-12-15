@@ -28,7 +28,7 @@ uses Unit3;
 
 procedure TForm4.FormShow(Sender: TObject);
 begin
-player1Name.Caption:=players[0].name;
+player1Name.Caption:=players[1].name;
 end;
 
 end.

@@ -42,7 +42,7 @@ begin
   Form2.Hide;
   Form3.Show;
   i:=1;
-
+  NumberOfPlayers:=strToInt(NumberOfPlayersEdit.Text);
 end;
 
 end.

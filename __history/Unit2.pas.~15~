@@ -22,7 +22,7 @@ type
 
 var
   Form2: TForm2;
-  NumberOfPlayers,i: short;
+  NumberOfPlayers,i: integer;
 
 implementation
 
@@ -39,10 +39,11 @@ end;
 
 procedure TForm2.SubmitButtonClick(Sender: TObject);
 begin
+i:=1;
+  NumberOfPlayers:=strToInt(NumberOfPlayersEdit.Text);
   Form2.Hide;
   Form3.Show;
-  i:=0;
-  NumberOfPlayers:=StrToInt(NumberOfPlayersEdit.Text);
+
 end;
 
 end.

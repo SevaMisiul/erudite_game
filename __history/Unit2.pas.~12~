@@ -22,7 +22,7 @@ type
 
 var
   Form2: TForm2;
-  NumberOfPlayers: short;
+  NumberOfPlayers,i: short;
 
 implementation
 
@@ -42,7 +42,7 @@ begin
   Form2.Hide;
   Form3.Show;
   i:=1;
-
+  NumberOfPlayers:=NumberOfPlayersEdit.Text;
 end;
 
 end.

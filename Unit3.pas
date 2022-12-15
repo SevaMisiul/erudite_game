@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Unit4;
 
 type
   TForm3 = class(TForm)
@@ -13,6 +13,7 @@ type
 	Player: TEdit;
 	NextPlayerBtn: TButton;
 	procedure NextPlayerBtnClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
 	{ Private declarations }
   public
@@ -37,20 +38,24 @@ implementation
 
 uses Unit2;
 
+procedure TForm3.FormShow(Sender: TObject);
+begin
+Player.Text:=IntToStr(NumberOfPlayers);
+setLength(Players, NumberOfPlayers);
+end;
+
 procedure TForm3.NextPlayerBtnClick(Sender: TObject);
 
 begin
 inc(i);
-
-
   if i <= NumberOfPlayers then
   begin
-
+    Players[i-2].name:=Player.Text;
 	Player.Text := '';
   end else
   begin
     Form3.Hide;
-
+    Form4.Show;
   end;
   PlayerNameLabel.Caption := 'Enter player ' + IntToStr(i) + ' name' +IntToStr(NumberOfPlayers);
 
