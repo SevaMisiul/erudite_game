@@ -1,9 +1,10 @@
 object Form1: TForm1
   Left = 0
   Top = 0
+  BorderStyle = bsToolWindow
   Caption = 'Form1'
-  ClientHeight = 573
-  ClientWidth = 947
+  ClientHeight = 610
+  ClientWidth = 994
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,27 +12,34 @@ object Form1: TForm1
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Scaled = False
   PixelsPerInch = 96
   TextHeight = 13
   object NumberOfPlayersLabel: TLabel
-    Left = 432
-    Top = 216
+    Left = 416
+    Top = 208
     Width = 124
     Height = 13
     Caption = 'Enter nummber of players'
     Visible = False
   end
   object EnterNameLabel: TLabel
-    Left = 282
-    Top = 272
+    Left = 421
+    Top = 208
     Width = 97
     Height = 13
     Caption = 'Player 1 enter name'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     Visible = False
   end
   object StartGameBtn: TButton
     Left = 416
-    Top = 488
+    Top = 516
     Width = 121
     Height = 49
     Caption = 'Start game'
@@ -39,8 +47,8 @@ object Form1: TForm1
     OnClick = StartGameBtnClick
   end
   object ContinueButton: TButton
-    Left = 456
-    Top = 304
+    Left = 440
+    Top = 296
     Width = 75
     Height = 25
     Caption = 'Continue'
@@ -49,8 +57,8 @@ object Form1: TForm1
     OnClick = ContinueButtonClick
   end
   object NumberOfPlayersEdit: TEdit
-    Left = 432
-    Top = 256
+    Left = 416
+    Top = 248
     Width = 121
     Height = 21
     NumbersOnly = True
@@ -59,9 +67,9 @@ object Form1: TForm1
     OnChange = NumberOfPlayersEditChange
   end
   object NextNameEnterBtn: TButton
-    Left = 296
-    Top = 344
-    Width = 75
+    Left = 441
+    Top = 296
+    Width = 77
     Height = 25
     Caption = 'Next player'
     TabOrder = 3
@@ -69,11 +77,12 @@ object Form1: TForm1
     OnClick = NextNameEnterBtnClick
   end
   object PlayerNameEdit: TEdit
-    Left = 272
-    Top = 304
+    Left = 416
+    Top = 248
     Width = 121
     Height = 21
     TabOrder = 4
     Visible = False
+    OnChange = PlayerNameEditChange
   end
 end
