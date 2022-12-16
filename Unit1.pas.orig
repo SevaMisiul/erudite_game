@@ -1,12 +1,32 @@
+<<<<<<< HEAD
+﻿unit Unit1;
+=======
 unit Unit1;
+>>>>>>> edb0712ffa4a1bd6b528646b49ac8287c9a56b63
 
 interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, System.UITypes, Vcl.Graphics,
+  System.Classes, Vcl.Graphics,
+<<<<<<< HEAD
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Unit2;
+
+type
+  TForm1 = class(TForm)
+	StartGameBtn: TButton;
+    procedure StartGameBtnClick(Sender: TObject);
+  private
+	{ Private declarations }
+  public
+	{ Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+=======
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls;
-const vowel = ['a', 'e', 'i', 'o', 'u','y'];
+
 type
   TForm1 = class(TForm)
     StartGameBtn: TButton;
@@ -51,36 +71,22 @@ var
   PlayersArr: TPlayersArr;
   NumberOfPlayers: integer;
   IName: integer;
-  AllLetters: string;
   PlayerPanelsArr: TPlayerPanels;
+>>>>>>> edb0712ffa4a1bd6b528646b49ac8287c9a56b63
 
 implementation
 
 {$R *.dfm}
-procedure setLetters(var AllLetters: string);
-var i:integer;
-alphabet:char;
+
+<<<<<<< HEAD
+procedure TForm1.StartGameBtnClick(Sender: TObject);
 begin
-
-for alphabet := 'a' to 'z' do
-  begin
-    if charInSet(alphabet,vowel) then
-    begin
-       for i := 1 to 8 do
-       begin
-         AllLetters:=AllLetters+alphabet;
-
-       end;
-    end else
-    begin
-       for i := 1 to 4 do
-       begin
-         AllLetters:=AllLetters+alphabet;
-       end;
-    end;
-  end;
-end;
+  Form1.Hide;
+  Form2.Show;
+=======
 procedure TForm1.ContinueButtonClick(Sender: TObject);
+var
+  I: integer;
 begin
   NumberOfPlayers := strtoint(NumberOfPlayersEdit.Text);
   setLength(PlayersArr, NumberOfPlayers);
@@ -97,9 +103,7 @@ end;
 
 procedure TForm1.NextNameEnterBtnClick(Sender: TObject);
 var
-  I, J, m: integer;
-  str: string;
-
+  I, J: integer;
 begin
   if IName < NumberOfPlayers - 1 then
   begin
@@ -115,7 +119,7 @@ begin
     PlayerNameEdit.Visible := False;
     EnterNameLabel.Visible := False;
     NextNameEnterBtn.Visible := False;
-    setLetters(AllLetters);
+
     setLength(PlayerPanelsArr, NumberOfPlayers);
     for I := 0 to NumberOfPlayers - 1 do
     begin
@@ -178,15 +182,6 @@ begin
         Caption := 'Score: ' + inttostr(PlayersArr[I].Score);
       end;
 
-      str:='';
-      for j:= 1 to 10 do
-  		begin
-     		m:=random(Length(AllLetters)-1)+1;
-     		PlayersArr[i].Letters[j]:=AllLetters[m];
-            delete(AllLetters,m,1);
-            str:=str+AllLetters[m];
-  		end;
-
       PlayerPanelsArr[I].PlayerLetters := TLabel.Create(Form1);
       with PlayerPanelsArr[I].PlayerLetters do
       begin
@@ -203,8 +198,8 @@ begin
           Left := 250 * (I - 4) + 40;
           Top := 135;
         end;
-        
-        Caption := str;
+
+        Caption := 'Letters: qwertyuiop';
       end;
 
     end;
@@ -242,6 +237,7 @@ begin
   NumberOfPlayersLabel.Visible := True;
   StartGameBtn.Visible := False;
 
+>>>>>>> edb0712ffa4a1bd6b528646b49ac8287c9a56b63
 end;
 
 end.
