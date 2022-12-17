@@ -1,4 +1,4 @@
-unit Unit1;
+﻿unit Unit1;
 
 interface
 
@@ -20,6 +20,9 @@ type
     NameEdit: TEdit;
     GameMoveBtn: TButton;
     WordEdit: TEdit;
+    YesBtn: TButton;
+    AddWordLabel: TLabel;
+    NoBtn: TButton;
     procedure IntEditChange(Sender: TObject);
     procedure ContinueButtonClick(Sender: TObject);
     procedure NextNameEnterBtnClick(Sender: TObject);
@@ -27,6 +30,8 @@ type
     procedure NameEditChange(Sender: TObject);
     procedure WordEditChange(Sender: TObject);
     procedure GameMoveBtnClick(Sender: TObject);
+    procedure YesBtnClick(Sender: TObject);
+    procedure NoBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -56,8 +61,8 @@ var
   Form1: TForm1;
   PlayersArr: TPlayersArr;
   NumberOfPlayers: integer;
-  IName, Turn: integer;
-  AllLetters, LastWord: string;
+  IName, Turn, SkipedPlayers, AskedPlayer: integer;
+  AllLetters, LastWord, CurWord: string;
   PlayerPanelsArr: TPlayerPanels;
   F: TextFile;
   Vocabulary: array of string;
@@ -65,6 +70,15 @@ var
 implementation
 
 {$R *.dfm}
+
+function SpaceBetween(S: string): string;
+var
+  I: integer;
+begin
+  result := '';
+  for I := 1 to 10 do
+    result := result + S[I] + ' ';
+end;
 
 procedure SetLetters(var AllLetters: string);
 var
@@ -84,7 +98,6 @@ procedure TForm1.ContinueButtonClick(Sender: TObject);
 begin
   NumberOfPlayers := StrToInt(IntEdit.Text);
   setLength(PlayersArr, NumberOfPlayers);
-
   ContinueButton.Visible := False;
   IntEdit.Visible := False;
   EnterLabel.Caption := 'Player 1 enter name';
@@ -145,67 +158,46 @@ begin
         end;
       end;
 
-      PlayerPanelsArr[I].Name := TLabel.Create(Form1);
+      PlayerPanelsArr[I].Name := TLabel.Create(PlayerPanelsArr[I].Panel);
       with PlayerPanelsArr[I].Name do
       begin
         Font.Style := Font.Style + [fsBold];
-        Parent := Form1;
+        Parent := PlayerPanelsArr[I].Panel;
         Width := 200;
         Height := 20;
-        if I < 4 then
-        begin
-          Left := 250 * I + 40;
-          Top := 15;
-        end
-        else
-        begin
-          Left := 250 * (I - 4) + 40;
-          Top := 95;
-        end;
+        Font.Size := 10;
+        Left := 10;
+        Top := 5;
 
         Caption := PlayersArr[I].Name;
       end;
 
-      PlayerPanelsArr[I].Score := TLabel.Create(Form1);
+      PlayerPanelsArr[I].Score := TLabel.Create(PlayerPanelsArr[I].Panel);
       with PlayerPanelsArr[I].Score do
       begin
-        Parent := Form1;
+        Parent := PlayerPanelsArr[I].Panel;
         Width := 200;
         Height := 20;
-        if I < 4 then
-        begin
-          Left := 250 * I + 40;
-          Top := 35;
-        end
-        else
-        begin
-          Left := 250 * (I - 4) + 40;
-          Top := 115;
-        end;
+        Font.Size := 10;
+        Left := 10;
+        Top := 25;
 
         Caption := 'Score: ' + IntToStr(PlayersArr[I].Score);
       end;
 
       SetPlayerLetters(I);
 
-      PlayerPanelsArr[I].Letters := TLabel.Create(Form1);
+      PlayerPanelsArr[I].Letters := TLabel.Create(PlayerPanelsArr[I].Panel);
       with PlayerPanelsArr[I].Letters do
       begin
-        Parent := Form1;
+        Parent := PlayerPanelsArr[I].Panel;
         Width := 200;
         Height := 20;
-        if I < 4 then
-        begin
-          Left := 250 * I + 40;
-          Top := 55;
-        end
-        else
-        begin
-          Left := 250 * (I - 4) + 40;
-          Top := 135;
-        end;
+        Font.Size := 10;
+        Left := 10;
+        Top := 45;
 
-        Caption := 'Letters: ' + PlayersArr[I].Letters;
+        Caption := 'Letters: ' + SpaceBetween(PlayersArr[I].Letters);
       end;
       NameEdit.Visible := False;
       WordEdit.Visible := True;
@@ -240,7 +232,8 @@ begin
     inc(I);
   PlayerPanelsArr[I].Score.Caption := 'Score: ' +
     IntToStr(PlayersArr[Turn].Score);
-  PlayerPanelsArr[I].Letters.Caption := 'Letters: ' + PlayersArr[Turn].Letters;
+  PlayerPanelsArr[I].Letters.Caption := 'Letters: ' +
+    SpaceBetween(PlayersArr[Turn].Letters);
   PlayerPanelsArr[I].IntScore := PlayersArr[Turn].Score;
   for I := 0 to NumberOfPlayers - 1 do
     for J := I + 1 to NumberOfPlayers - 1 do
@@ -269,7 +262,9 @@ var
   Letter: char;
   tmp: string;
   IsCorrect: Boolean;
+  IsAdding: Boolean;
 begin
+  IsAdding := False;
   if length(WordEdit.Text) <> 0 then
   begin
     IsCorrect := True;
@@ -298,19 +293,103 @@ begin
       end
       else
       begin
-        // add to vocabulary button
-        PlayersArr[Turn].Score := PlayersArr[Turn].Score -
-          length(WordEdit.Text);
+        YesBtn.Visible := True;
+        NoBtn.Visible := True;
+        AddWordLabel.Visible := True;
+        AddWordLabel.Caption := PlayersArr[Turn].Name +
+          ', do you want to add word ' + WordEdit.Text + ' to vocabulary?';
+        IsAdding := True;
+        AskedPlayer := 0;
+        WordEdit.Enabled := False;
+        GameMoveBtn.Enabled := False;
       end;
     end
     else
       PlayersArr[Turn].Score := PlayersArr[Turn].Score - length(WordEdit.Text);
+    if not IsAdding then
+    begin
+      WordEdit.Text := '';
+      Sort;
+      SkipedPlayers := 0;
+    end;
+  end
+  else
+    inc(SkipedPlayers);
+  if SkipedPlayers = NumberOfPlayers then
+    Form1.Close;
+  // menu rerun game
+  if not IsAdding then
+  begin
+    inc(Turn);
+    Turn := Turn mod NumberOfPlayers;
+    EnterLabel.Caption := PlayersArr[Turn].Name + ' enter word';
+  end;
+end;
+
+procedure UpdateVocabulary(Word: string);
+var
+  F: TextFile;
+  I: integer;
+begin
+  Vocabulary[length(Vocabulary) - 1] := Word;
+  setLength(Vocabulary, length(Vocabulary) + 1);
+  AssignFile(F, '..\..\vocabulary.txt');
+  rewrite(F);
+  for I := 0 to length(Vocabulary) - 2 do
+    writeln(F, Vocabulary[I]);
+  CloseFile(F);
+end;
+
+procedure TForm1.YesBtnClick(Sender: TObject);
+begin
+  if AskedPlayer = NumberOfPlayers then
+  begin
+    SetPlayerLetters(Turn);
+    PlayersArr[Turn].Score := PlayersArr[Turn].Score + length(WordEdit.Text);
+    WordEdit.Enabled := True;
+    GameMoveBtn.Enabled := True;
+    UpdateVocabulary(WordEdit.Text);
     WordEdit.Text := '';
     Sort;
+    SkipedPlayers := 0;
+    inc(Turn);
+    Turn := Turn mod NumberOfPlayers;
+    EnterLabel.Caption := PlayersArr[Turn].Name + ' enter word';
+    YesBtn.Visible := False;
+    NoBtn.Visible := False;
+    AddWordLabel.Visible := False;
+  end
+  else
+  begin
+    if AskedPlayer = Turn then
+    begin
+      AddWordLabel.Caption := PlayersArr[AskedPlayer + 1].Name +
+        ', do you want to add word ' + WordEdit.Text + ' to vocabulary?';
+      AskedPlayer := AskedPlayer + 2;
+    end
+    else
+    begin
+      AddWordLabel.Caption := PlayersArr[AskedPlayer].Name +
+        ', do you want to add word ' + WordEdit.Text + ' to vocabulary?';
+      AskedPlayer := AskedPlayer + 1;
+    end;
   end;
+end;
+
+procedure TForm1.NoBtnClick(Sender: TObject);
+begin
+  WordEdit.Enabled := True;
+  GameMoveBtn.Enabled := True;
+  PlayersArr[Turn].Score := PlayersArr[Turn].Score - length(WordEdit.Text);
+  WordEdit.Text := '';
+  Sort;
+  SkipedPlayers := 0;
   inc(Turn);
   Turn := Turn mod NumberOfPlayers;
   EnterLabel.Caption := PlayersArr[Turn].Name + ' enter word';
+  YesBtn.Visible := False;
+  NoBtn.Visible := False;
+  AddWordLabel.Visible := False;
 end;
 
 procedure TForm1.IntEditChange(Sender: TObject);
@@ -337,7 +416,7 @@ end;
 
 procedure TForm1.StartGameBtnClick(Sender: TObject);
 var
-  s: string;
+  S: string;
 begin
   randomize;
   ContinueButton.Visible := True;
@@ -351,11 +430,11 @@ begin
   setLength(Vocabulary, 1);
   while not Eof(F) do
   begin
-    readln(F, s);
-    Vocabulary[length(Vocabulary) - 1] := s;
+    readln(F, S);
+    Vocabulary[length(Vocabulary) - 1] := S;
     setLength(Vocabulary, length(Vocabulary) + 1);
   end;
-  closeFile(F);
+  CloseFile(F);
 end;
 
 procedure TForm1.WordEditChange(Sender: TObject);

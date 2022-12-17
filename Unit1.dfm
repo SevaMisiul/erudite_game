@@ -18,9 +18,16 @@ object Form1: TForm1
   object EnterLabel: TLabel
     Left = 416
     Top = 296
-    Width = 124
+    Width = 116
     Height = 13
-    Caption = 'Enter nummber of players'
+    Caption = 'Enter number of players'
+    Visible = False
+  end
+  object AddWordLabel: TLabel
+    Left = 648
+    Top = 344
+    Width = 3
+    Height = 13
     Visible = False
   end
   object StartGameBtn: TButton
@@ -89,5 +96,25 @@ object Form1: TForm1
     TabOrder = 6
     Visible = False
     OnChange = WordEditChange
+  end
+  object YesBtn: TButton
+    Left = 586
+    Top = 380
+    Width = 65
+    Height = 33
+    Caption = 'Yes'
+    TabOrder = 7
+    Visible = False
+    OnClick = YesBtnClick
+  end
+  object NoBtn: TButton
+    Left = 688
+    Top = 380
+    Width = 59
+    Height = 33
+    Caption = 'No'
+    TabOrder = 8
+    Visible = False
+    OnClick = NoBtnClick
   end
 end
