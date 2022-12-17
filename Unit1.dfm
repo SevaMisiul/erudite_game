@@ -25,9 +25,9 @@ object Form1: TForm1
   end
   object AddWordLabel: TLabel
     Left = 648
-    Top = 344
-    Width = 3
-    Height = 13
+    Top = 296
+    Width = 217
+    Height = 21
     Visible = False
   end
   object StartGameBtn: TButton
@@ -98,8 +98,8 @@ object Form1: TForm1
     OnChange = WordEditChange
   end
   object YesBtn: TButton
-    Left = 586
-    Top = 380
+    Left = 648
+    Top = 364
     Width = 65
     Height = 33
     Caption = 'Yes'
@@ -108,8 +108,8 @@ object Form1: TForm1
     OnClick = YesBtnClick
   end
   object NoBtn: TButton
-    Left = 688
-    Top = 380
+    Left = 806
+    Top = 364
     Width = 59
     Height = 33
     Caption = 'No'

@@ -1,4 +1,4 @@
-﻿unit Unit1;
+unit Unit1;
 
 interface
 
@@ -62,7 +62,7 @@ var
   PlayersArr: TPlayersArr;
   NumberOfPlayers: integer;
   IName, Turn, SkipedPlayers, AskedPlayer: integer;
-  AllLetters, LastWord, CurWord: string;
+  AllLetters, LastWord, CurWord, CurPlayerLetters: string;
   PlayerPanelsArr: TPlayerPanels;
   F: TextFile;
   Vocabulary: array of string;
@@ -260,7 +260,6 @@ end;
 procedure TForm1.GameMoveBtnClick(Sender: TObject);
 var
   Letter: char;
-  tmp: string;
   IsCorrect: Boolean;
   IsAdding: Boolean;
 begin
@@ -268,11 +267,11 @@ begin
   if length(WordEdit.Text) <> 0 then
   begin
     IsCorrect := True;
-    tmp := PlayersArr[Turn].Letters;
+    CurPlayerLetters := PlayersArr[Turn].Letters;
 
     for Letter in WordEdit.Text do
-      if tmp.Contains(Letter) then
-        delete(tmp, pos(Letter, tmp), 1)
+      if CurPlayerLetters.Contains(Letter) then
+        delete(CurPlayerLetters, pos(Letter, CurPlayerLetters), 1)
       else
         IsCorrect := False;
 
@@ -287,7 +286,7 @@ begin
         else
           PlayersArr[Turn].Score := PlayersArr[Turn].Score +
             length(WordEdit.Text);
-        PlayersArr[Turn].Letters := tmp;
+        PlayersArr[Turn].Letters := CurPlayerLetters;
         SetPlayerLetters(Turn);
         LastWord := WordEdit.Text;
       end
@@ -342,8 +341,10 @@ end;
 
 procedure TForm1.YesBtnClick(Sender: TObject);
 begin
-  if AskedPlayer = NumberOfPlayers then
+  if (AskedPlayer >= NumberOfPlayers) or
+    ((AskedPlayer + 1 = NumberOfPlayers) and (AskedPlayer = Turn)) then
   begin
+    PlayersArr[Turn].Letters := CurPlayerLetters;
     SetPlayerLetters(Turn);
     PlayersArr[Turn].Score := PlayersArr[Turn].Score + length(WordEdit.Text);
     WordEdit.Enabled := True;
@@ -361,18 +362,16 @@ begin
   end
   else
   begin
-    if AskedPlayer = Turn then
+    if (AskedPlayer + 1 < NumberOfPlayers) and (AskedPlayer = Turn) then
     begin
       AddWordLabel.Caption := PlayersArr[AskedPlayer + 1].Name +
         ', do you want to add word ' + WordEdit.Text + ' to vocabulary?';
-      AskedPlayer := AskedPlayer + 2;
+      AskedPlayer := AskedPlayer + 1;
     end
     else
-    begin
       AddWordLabel.Caption := PlayersArr[AskedPlayer].Name +
         ', do you want to add word ' + WordEdit.Text + ' to vocabulary?';
-      AskedPlayer := AskedPlayer + 1;
-    end;
+    AskedPlayer := AskedPlayer + 1;
   end;
 end;
 
