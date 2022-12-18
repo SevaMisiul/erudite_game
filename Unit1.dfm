@@ -3,8 +3,8 @@ object Form1: TForm1
   Top = 0
   BorderStyle = bsToolWindow
   Caption = 'Form1'
-  ClientHeight = 610
-  ClientWidth = 994
+  ClientHeight = 600
+  ClientWidth = 1000
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,12 +12,11 @@ object Form1: TForm1
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  Scaled = False
   PixelsPerInch = 96
   TextHeight = 13
   object EnterLabel: TLabel
     Left = 416
-    Top = 296
+    Top = 317
     Width = 116
     Height = 13
     Caption = 'Enter number of players'
@@ -26,8 +25,23 @@ object Form1: TForm1
   object AddWordLabel: TLabel
     Left = 648
     Top = 296
-    Width = 217
-    Height = 21
+    Width = 3
+    Height = 13
+    Visible = False
+  end
+  object FiftyLabel: TLabel
+    Left = 16
+    Top = 296
+    Width = 168
+    Height = 13
+    Caption = 'Enter 5 letters you want to replace'
+    Visible = False
+  end
+  object HelpLabel: TLabel
+    Left = 224
+    Top = 296
+    Width = 3
+    Height = 13
     Visible = False
   end
   object StartGameBtn: TButton
@@ -41,7 +55,7 @@ object Form1: TForm1
   end
   object ContinueButton: TButton
     Left = 440
-    Top = 384
+    Top = 386
     Width = 75
     Height = 25
     Caption = 'Continue'
@@ -50,7 +64,7 @@ object Form1: TForm1
     OnClick = ContinueButtonClick
   end
   object IntEdit: TEdit
-    Left = 416
+    Left = 411
     Top = 336
     Width = 121
     Height = 21
@@ -60,7 +74,7 @@ object Form1: TForm1
     OnChange = IntEditChange
   end
   object NextNameEnterBtn: TButton
-    Left = 441
+    Left = 440
     Top = 384
     Width = 77
     Height = 25
@@ -70,7 +84,7 @@ object Form1: TForm1
     OnClick = NextNameEnterBtnClick
   end
   object NameEdit: TEdit
-    Left = 416
+    Left = 411
     Top = 336
     Width = 121
     Height = 21
@@ -79,7 +93,7 @@ object Form1: TForm1
     OnChange = NameEditChange
   end
   object GameMoveBtn: TButton
-    Left = 441
+    Left = 440
     Top = 384
     Width = 77
     Height = 25
@@ -89,10 +103,11 @@ object Form1: TForm1
     OnClick = GameMoveBtnClick
   end
   object WordEdit: TEdit
-    Left = 416
+    Left = 411
     Top = 336
     Width = 121
     Height = 21
+    CharCase = ecLowerCase
     TabOrder = 6
     Visible = False
     OnChange = WordEditChange
@@ -116,5 +131,77 @@ object Form1: TForm1
     TabOrder = 8
     Visible = False
     OnClick = NoBtnClick
+  end
+  object FiftyBtn: TButton
+    Left = 32
+    Top = 384
+    Width = 57
+    Height = 25
+    Caption = '50-50'
+    TabOrder = 9
+    Visible = False
+    OnClick = FiftyBtnClick
+  end
+  object HelpBtn: TButton
+    Left = 224
+    Top = 384
+    Width = 73
+    Height = 25
+    Caption = 'Help a friend'
+    TabOrder = 10
+    Visible = False
+    OnClick = HelpBtnClick
+  end
+  object FiftyEdit: TEdit
+    Left = 32
+    Top = 336
+    Width = 137
+    Height = 21
+    CharCase = ecLowerCase
+    MaxLength = 5
+    TabOrder = 11
+    Visible = False
+    OnChange = FiftyEditChange
+  end
+  object FiftyConfirmBtn: TButton
+    Left = 112
+    Top = 384
+    Width = 57
+    Height = 25
+    Caption = 'Confirm'
+    TabOrder = 12
+    Visible = False
+    OnClick = FiftyConfirmBtnClick
+  end
+  object HelpEdit: TEdit
+    Left = 224
+    Top = 336
+    Width = 153
+    Height = 21
+    CharCase = ecLowerCase
+    MaxLength = 1
+    TabOrder = 13
+    Visible = False
+    OnChange = HelpEditChange
+  end
+  object HelpConfirmBtn: TButton
+    Left = 312
+    Top = 384
+    Width = 65
+    Height = 25
+    Caption = 'Confirm'
+    TabOrder = 14
+    Visible = False
+    OnClick = HelpConfirmBtnClick
+  end
+  object PlayersComboBox: TComboBox
+    Left = 224
+    Top = 336
+    Width = 153
+    Height = 21
+    Style = csDropDownList
+    TabOrder = 15
+    Visible = False
+    OnChange = PlayersComboBoxChange
   end
 end
