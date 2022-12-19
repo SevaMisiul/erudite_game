@@ -332,7 +332,7 @@ var
 begin
   if IName < NumberOfPlayers - 1 then
   begin
-    NameEdit.Focused;
+    NameEdit.setFocus;
 	PlayersArr[IName].Name := NameEdit.Text;
 	NameEdit.Text := '';
 	inc(IName);
@@ -343,6 +343,7 @@ begin
 	PlayersArr[IName].Name := NameEdit.Text;
 	NameEdit.Text := '';
     Turn:=0;
+    FiftyBtn.Enabled:=true;
     SkipedPlayers := 0;
 	NextNameEnterBtn.Visible := False;
 	SetLetters(AllLetters);
