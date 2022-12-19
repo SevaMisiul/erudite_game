@@ -30,7 +30,7 @@ object Form1: TForm1
     Visible = False
   end
   object FiftyLabel: TLabel
-    Left = 16
+    Left = 8
     Top = 296
     Width = 168
     Height = 13
@@ -42,6 +42,14 @@ object Form1: TForm1
     Top = 296
     Width = 3
     Height = 13
+    Visible = False
+  end
+  object WonPlayerLabel: TLabel
+    Left = 440
+    Top = 112
+    Width = 77
+    Height = 13
+    Caption = 'WonPlayerLabel'
     Visible = False
   end
   object StartGameBtn: TButton
