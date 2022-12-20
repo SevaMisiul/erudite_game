@@ -321,14 +321,15 @@ var
   IsUsedName: Bool;
 begin
   IsUsedName := True;
-  for J := 0 to IName - 1 do
-	if NameEdit.Text = PlayersArr[J].Name then
-	  IsUsedName := False;
-  NextNameEnterBtn.Enabled := IsUsedName;
   if (length(NameEdit.Text) = 0) then
 	NextNameEnterBtn.Enabled := False
   else
-	NextNameEnterBtn.Enabled := True;
+  begin
+	for J := 0 to IName - 1 do
+	  if NameEdit.Text = PlayersArr[J].Name then
+		IsUsedName := False;
+	NextNameEnterBtn.Enabled := IsUsedName;
+  end;
 end;
 
 procedure TForm1.NextNameEnterBtnClick(Sender: TObject);
