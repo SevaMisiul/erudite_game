@@ -45,11 +45,19 @@ object Form1: TForm1
     Visible = False
   end
   object WonPlayerLabel: TLabel
-    Left = 440
+    Left = 411
     Top = 112
-    Width = 77
-    Height = 13
+    Width = 121
+    Height = 21
+    Alignment = taCenter
     Caption = 'WonPlayerLabel'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -17
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    Layout = tlCenter
     Visible = False
   end
   object StartGameBtn: TButton

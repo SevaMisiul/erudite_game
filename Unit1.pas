@@ -32,7 +32,7 @@ type
 	HelpEdit: TEdit;
 	HelpConfirmBtn: TButton;
 	PlayersComboBox: TComboBox;
-    WonPlayerLabel: TLabel;
+	WonPlayerLabel: TLabel;
 	procedure IntEditChange(Sender: TObject);
 	procedure ContinueButtonClick(Sender: TObject);
 	procedure NextNameEnterBtnClick(Sender: TObject);
@@ -95,7 +95,7 @@ var
   I: integer;
   Letter: char;
 begin
-AllLetters:='';
+  AllLetters := '';
   for Letter := 'a' to 'z' do
 	if CharInSet(Letter, Vowel) then
 	  for I := 1 to 8 do
@@ -194,54 +194,55 @@ end;
 
 procedure endGame(form: TForm1);
 var
-  I,max: integer;
-  playersWon:string;
+  I: integer;
+  playersWon: string;
+  multiWon: Boolean;
 begin
   form.EnterLabel.Visible := False;
   form.StartGameBtn.Visible := True;
-  form.FiftyBtn.Visible := false ;
-  form.FiftyConfirmBtn.Visible := false ;
-  form.gameMoveBtn.Visible := false;
-  form.WordEdit.Visible := false;
-  form.helpBtn.Visible:=false;
-  form.WonPlayerLabel.Visible:=true;
-  max:=0;
+  form.FiftyBtn.Visible := False;
+  form.FiftyConfirmBtn.Visible := False;
+  form.GameMoveBtn.Visible := False;
+  form.WordEdit.Visible := False;
+  form.HelpBtn.Visible := False;
+  form.WonPlayerLabel.Visible := True;
+  playersWon := PlayerPanelsArr[0].Name.Caption;
+
   for I := 1 to NumberOfPlayers - 1 do
-  	begin
-      if PlayerPanelsArr[I].Score.Caption=PlayerPanelsArr[0].Score.Caption then
-      inc(max);
-    end;
-      if (max = 0) then
-      form.WonPlayerLabel.Caption:='player '+PlayerPanelsArr[0].Name.Caption+' won!!!' else
-      begin
-      	playersWon:=PlayerPanelsArr[0].Name.Caption ;
-        for I := 1 to max do
-        playersWon:=playersWon + ', ' +PlayerPanelsArr[I].Name.Caption;
-        form.WonPlayerLabel.Caption:='players '+playersWon+' won!!!' ;
-      end;
+	if PlayerPanelsArr[I].Score.Caption = PlayerPanelsArr[0].Score.Caption then
+	begin
+	  playersWon := playersWon + ', ' + PlayerPanelsArr[I].Name.Caption;
+	  multiWon := True;
+	end;
 
-
-
+  if not multiWon then
+	form.WonPlayerLabel.Caption := 'player ' + PlayerPanelsArr[0].Name.Caption +
+	  ' won!!!'
+  else
+	form.WonPlayerLabel.Caption := 'players ' + playersWon + ' won!!!';
   SetLetters(AllLetters);
+
   for I := 0 to NumberOfPlayers - 1 do
   begin
 	with PlayerPanelsArr[I] do
 	begin
-	  	Name.Free;
-		Score.Free;
-		Letters.Free;
-		Panel.Free;
-		IntScore:=0;
+	  Name.Free;
+	  Score.Free;
+	  Letters.Free;
+	  Panel.Free;
+	  IntScore := 0;
 	end;
-    with PlayersArr[I] do
-    begin
-        Name:= '';
-		Letters:= '';
-		Score:= 0;
-		IsUsed50:= false;
-		IsUsedHelp:= false;
-    end;
+	with PlayersArr[I] do
+	begin
+	  Name := '';
+	  Letters := '';
+	  Score := 0;
+	  IsUsed50 := False;
+	  IsUsedHelp := False;
+	end;
   end;
+  PlayerPanelsArr := nil;
+  PlayersArr := nil;
 end;
 
 function IsEnableHelpBtn(Id: integer): Boolean;
@@ -270,15 +271,16 @@ var
 begin
   randomize;
   ContinueButton.Visible := True;
-  WonPlayerLabel.Visible:=false;
+  WonPlayerLabel.Visible := False;
   IntEdit.Visible := True;
   EnterLabel.Visible := True;
   EnterLabel.Caption := 'Enter number of players';
-  IntEdit.Text:='';
+  IntEdit.Text := '';
   StartGameBtn.Visible := False;
   NameEdit.Text := '';
   AssignFile(F, '..\..\vocabulary.txt');
   Reset(F);
+  ContinueButton.Enabled := False;
   setLength(Vocabulary, 1);
   while not Eof(F) do
   begin
@@ -298,19 +300,19 @@ begin
 	ContinueButton.Enabled := True;
 end;
 
-
-
 procedure TForm1.ContinueButtonClick(Sender: TObject);
 begin
+
   NumberOfPlayers := StrToInt(IntEdit.Text);
   setLength(PlayersArr, NumberOfPlayers);
   ContinueButton.Visible := False;
   IntEdit.Visible := False;
   EnterLabel.Caption := 'Player 1 enter name';
-  IName:=0;
+  IName := 0;
   NameEdit.Visible := True;
+  NameEdit.setFocus;
   NextNameEnterBtn.Visible := True;
-
+  NextNameEnterBtn.Enabled := False;
 end;
 
 procedure TForm1.NameEditChange(Sender: TObject);
@@ -323,7 +325,10 @@ begin
 	if NameEdit.Text = PlayersArr[J].Name then
 	  IsUsedName := False;
   NextNameEnterBtn.Enabled := IsUsedName;
-
+  if (length(NameEdit.Text) = 0) then
+	NextNameEnterBtn.Enabled := False
+  else
+	NextNameEnterBtn.Enabled := True;
 end;
 
 procedure TForm1.NextNameEnterBtnClick(Sender: TObject);
@@ -332,19 +337,20 @@ var
 begin
   if IName < NumberOfPlayers - 1 then
   begin
-    NameEdit.setFocus;
+	NameEdit.setFocus;
 	PlayersArr[IName].Name := NameEdit.Text;
 	NameEdit.Text := '';
 	inc(IName);
 	EnterLabel.Caption := 'Player ' + IntToStr(IName + 1) + ' enter name';
+	NextNameEnterBtn.Enabled := False;
   end
   else
   begin
 	PlayersArr[IName].Name := NameEdit.Text;
 	NameEdit.Text := '';
-    Turn:=0;
-    FiftyBtn.Enabled:=true;
-    SkipedPlayers := 0;
+	Turn := 0;
+	FiftyBtn.Enabled := True;
+	SkipedPlayers := 0;
 	NextNameEnterBtn.Visible := False;
 	SetLetters(AllLetters);
 	setLength(PlayerPanelsArr, NumberOfPlayers);
@@ -413,7 +419,6 @@ begin
 	  PlayersArr[I].IsUsed50 := False;
 	  PlayersArr[I].IsUsedHelp := False;
 	end;
-
 	FiftyBtn.Visible := True;
 	HelpBtn.Visible := True;
 	NameEdit.Visible := False;
@@ -493,18 +498,21 @@ begin
   else
 	inc(SkipedPlayers);
   if SkipedPlayers = NumberOfPlayers then
-	endGame(Form1);
-  if not IsAdding then
+	endGame(Form1)
+  else
   begin
-	inc(Turn);
-	Turn := Turn mod NumberOfPlayers;
-	if (length(AllLetters) >= 5) and (length(PlayersArr[Turn].Letters) >= 5)
-	then
-	  FiftyBtn.Enabled := not PlayersArr[Turn].IsUsed50
-	else
-	  FiftyBtn.Enabled := False;
-	HelpBtn.Enabled := IsEnableHelpBtn(Turn);
-	EnterLabel.Caption := PlayersArr[Turn].Name + ' enter word';
+	if not IsAdding then
+	begin
+	  inc(Turn);
+	  Turn := Turn mod NumberOfPlayers;
+	  if (length(AllLetters) >= 5) and (length(PlayersArr[Turn].Letters) >= 5)
+	  then
+		FiftyBtn.Enabled := not PlayersArr[Turn].IsUsed50
+	  else
+		FiftyBtn.Enabled := False;
+	  HelpBtn.Enabled := IsEnableHelpBtn(Turn);
+	  EnterLabel.Caption := PlayersArr[Turn].Name + ' enter word';
+	end;
   end;
 end;
 
@@ -576,7 +584,6 @@ begin
   NoBtn.Visible := False;
   AddWordLabel.Visible := False;
 end;
-
 
 procedure TForm1.FiftyBtnClick(Sender: TObject);
 begin
