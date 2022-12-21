@@ -2,10 +2,10 @@ object Form1: TForm1
   Left = 0
   Top = 0
   BorderStyle = bsToolWindow
-  Caption = 'Form1'
+  Caption = 'Erudite'
   ClientHeight = 600
   ClientWidth = 1000
-  Color = clBtnFace
+  Color = clCream
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -45,17 +45,21 @@ object Form1: TForm1
     Visible = False
   end
   object WonPlayerLabel: TLabel
-    Left = 411
+    AlignWithMargins = True
+    Left = 0
     Top = 112
-    Width = 121
+    Width = 992
     Height = 21
     Alignment = taCenter
+    AutoSize = False
     Caption = 'WonPlayerLabel'
+    Color = 6223851
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -17
     Font.Name = 'Tahoma'
     Font.Style = []
+    ParentColor = False
     ParentFont = False
     Layout = tlCenter
     Visible = False

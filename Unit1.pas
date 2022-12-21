@@ -190,13 +190,20 @@ begin
 		PlayerPanelsArr[J].Letters.Caption := TmpLetters;
 		PlayerPanelsArr[J].IntScore := TmpIntScore;
 	  end;
+      i:=0;
+      while (i<NumberOfPlayers) do
+      begin
+        if PlayerPanelsArr[0].IntScore = PlayerPanelsArr[i].IntScore then
+        PlayerPanelsArr[i].Panel.Color := $005EF7EB else PlayerPanelsArr[i].Panel.Color := clBtnFace;
+        inc(i);
+      end;
+
 end;
 
 procedure endGame(form: TForm1);
 var
   I: integer;
   playersWon: string;
-  multiWon: Boolean;
 begin
   form.EnterLabel.Visible := False;
   form.StartGameBtn.Visible := True;
@@ -212,14 +219,8 @@ begin
 	if PlayerPanelsArr[I].Score.Caption = PlayerPanelsArr[0].Score.Caption then
 	begin
 	  playersWon := playersWon + ', ' + PlayerPanelsArr[I].Name.Caption;
-	  multiWon := True;
 	end;
-
-  if not multiWon then
-	form.WonPlayerLabel.Caption := 'player ' + PlayerPanelsArr[0].Name.Caption +
-	  ' won!!!'
-  else
-	form.WonPlayerLabel.Caption := 'players ' + playersWon + ' won!!!';
+	form.WonPlayerLabel.Caption :=playersWon + ' won!!!';
   SetLetters(AllLetters);
 
   for I := 0 to NumberOfPlayers - 1 do
@@ -264,6 +265,7 @@ begin
   ContinueButton.Visible := True;
   WonPlayerLabel.Visible := False;
   IntEdit.Visible := True;
+  IntEdit.SetFocus;
   EnterLabel.Visible := True;
   EnterLabel.Caption := 'Enter number of players';
   IntEdit.Text := '';
@@ -308,17 +310,24 @@ end;
 
 procedure TForm1.NameEditChange(Sender: TObject);
 var
-  J: integer;
+  J,i: integer;
   IsUsedName: Bool;
+  name:string;
 begin
-  NameEdit.Text := trim(NameEdit.Text);
+name := trim(NameEdit.Text) ;
+    i:=2;
+    while i<=Length(name) do
+       begin
+         if (name[i]=' ') and (name[i-1]=' ') then
+         	delete(name,i,1) else inc(i);
+       end;
   IsUsedName := True;
-  if (length(NameEdit.Text) = 0) then
+  if (length(name) = 0) then
 	NextNameEnterBtn.Enabled := False
   else
   begin
 	for J := 0 to IName - 1 do
-	  if NameEdit.Text = PlayersArr[J].Name then
+	  if name = PlayersArr[J].Name then
 		IsUsedName := False;
 	NextNameEnterBtn.Enabled := IsUsedName;
   end;
@@ -326,12 +335,20 @@ end;
 
 procedure TForm1.NextNameEnterBtnClick(Sender: TObject);
 var
-  I, J: integer;
+  I: integer;
+  name: string;
 begin
+name := trim(NameEdit.Text) ;
+    i:=2;
+    while i<=Length(name) do
+       begin
+         if (name[i]=' ') and (name[i-1]=' ') then
+         	delete(name,i,1) else inc(i);
+       end;
   if IName < NumberOfPlayers - 1 then
   begin
 	NameEdit.setFocus;
-	PlayersArr[IName].Name := NameEdit.Text;
+	PlayersArr[IName].Name := name;
 	NameEdit.Text := '';
 	inc(IName);
 	EnterLabel.Caption := 'Player ' + IntToStr(IName + 1) + ' enter name';
@@ -339,7 +356,7 @@ begin
   end
   else
   begin
-	PlayersArr[IName].Name := NameEdit.Text;
+	PlayersArr[IName].Name := name;
 	NameEdit.Text := '';
 	Turn := 0;
 	FiftyBtn.Enabled := True;
@@ -354,6 +371,8 @@ begin
 	  with PlayerPanelsArr[I].Panel do
 	  begin
 		Parent := Form1;
+        ParentColor:=False;
+      	ParentBackground:=False;
 		Width := 200;
 		Height := 70;
 		if I < 4 then
@@ -427,6 +446,7 @@ end;
 
 procedure TForm1.WordEditChange(Sender: TObject);
 begin
+  WordEdit.Text := trim(WordEdit.Text);
   if length(WordEdit.Text) = 0 then
 	GameMoveBtn.Caption := 'Skip'
   else
@@ -619,10 +639,11 @@ begin
   FiftyConfirmBtn.Enabled := IsCorrect;
 end;
 
+
+
 procedure TForm1.FiftyConfirmBtnClick(Sender: TObject);
 var
   Letter: char;
-  I: integer;
 begin
   for Letter in FiftyEdit.Text do
 	delete(PlayersArr[Turn].Letters, pos(Letter, PlayersArr[Turn].Letters), 1);
@@ -664,7 +685,6 @@ end;
 
 procedure TForm1.HelpEditChange(Sender: TObject);
 var
-  I: integer;
   IsCorrect: Boolean;
 begin
   if HelpLabel.Caption = 'Enter your letter you want to swap' then
