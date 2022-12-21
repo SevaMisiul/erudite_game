@@ -230,15 +230,6 @@ begin
 	  Score.Free;
 	  Letters.Free;
 	  Panel.Free;
-	  IntScore := 0;
-	end;
-	with PlayersArr[I] do
-	begin
-	  Name := '';
-	  Letters := '';
-	  Score := 0;
-	  IsUsed50 := False;
-	  IsUsedHelp := False;
 	end;
   end;
   PlayerPanelsArr := nil;
@@ -320,6 +311,7 @@ var
   J: integer;
   IsUsedName: Bool;
 begin
+  NameEdit.Text := trim(NameEdit.Text);
   IsUsedName := True;
   if (length(NameEdit.Text) = 0) then
 	NextNameEnterBtn.Enabled := False
@@ -478,6 +470,8 @@ begin
 	  begin
 		YesBtn.Visible := True;
 		NoBtn.Visible := True;
+        FiftyBtn.Enabled := False;
+        HelpBtn.Enabled := False;
 		AddWordLabel.Visible := True;
 		AddWordLabel.Caption := PlayersArr[Turn].Name +
 		  ', do you want to add word ' + WordEdit.Text + ' to vocabulary?';
@@ -548,6 +542,8 @@ begin
 	EnterLabel.Caption := PlayersArr[Turn].Name + ' enter word';
 	YesBtn.Visible := False;
 	NoBtn.Visible := False;
+    FiftyBtn.Enabled := True;
+    HelpBtn.Enabled := True;
 	AddWordLabel.Visible := False;
   end
   else
@@ -583,6 +579,8 @@ begin
   EnterLabel.Caption := PlayersArr[Turn].Name + ' enter word';
   YesBtn.Visible := False;
   NoBtn.Visible := False;
+  FiftyBtn.Enabled := True;
+  HelpBtn.Enabled := True;
   AddWordLabel.Visible := False;
 end;
 
