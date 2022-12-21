@@ -1,7 +1,6 @@
 unit Unit1;
 
 interface
-
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, System.UITypes, Vcl.Graphics,
@@ -139,7 +138,7 @@ var
   I: integer;
 begin
   result := '';
-  for I := 1 to 10 do
+  for I := 1 to Length(s) do
 	result := result + S[I] + ' ';
 end;
 
@@ -668,7 +667,7 @@ var
 begin
   PlayersComboBox.Items.Clear;
   for I := 0 to NumberOfPlayers - 1 do
-	if I <> Turn then
+	if (I <> Turn) and (Length(PlayersArr[i].letters)>0) then
 	  PlayersComboBox.Items.Add(PlayersArr[I].Name);
   WordEdit.Enabled := False;
   GameMoveBtn.Enabled := False;
